@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Crowd Congestion & Panic Alert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Crowd & Panic Alert System</h1>
+            <p>Real-time Multi-Sensor Fusion Dashboard</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Left Column: Video and Controls -->
+            <div class="video-section">
+                <div class="glass-card controls">
+                    <div class="model-selector">
+                        <label for="model-select" style="margin-right: 10px; font-weight: 600;">Vision Model:</label>
+                        <select id="model-select">
+                            <option value="yolo11n.pt">YOLOv11 Nano (Fastest)</option>
+                            <option value="yolov10x.pt">YOLOv10 Extra Large (Best v10)</option>
+                            <option value="yolo11x.pt">YOLOv11 Extra Large (Best v11)</option>
+                        </select>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="text-green">● Live Stream Active</span>
+                    </div>
+                </div>
+
+                <div class="glass-card video-container">
+                    <!-- The MJPEG stream from Flask -->
+                    <img src="{{ url_for('video_feed') }}" alt="Live Video Feed" onerror="this.onerror=null; this.src=''; this.alt='Video stream unavailable. Please check IP Webcam connection.'; this.style.padding='2rem'; this.style.color='var(--text-secondary)';">
+                </div>
+            </div>
+
+            <!-- Right Column: Metrics and Risk Score -->
+            <div class="metrics-section">
+                <!-- Overall Risk Score -->
+                <div class="glass-card risk-card">
+                    <div class="risk-label">Overall Risk Assessment</div>
+                    <div id="risk-val" class="risk-value text-green">LOADING...</div>
+                </div>
+
+                <!-- Vision Metrics -->
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Vision Analytics</h3>
+                    <div class="metric-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">Crowd Count</div>
+                            <div id="count-val" class="metric-value">0</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Density Level</div>
+                            <div id="density-val" class="metric-value text-green">LOW</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">System FPS</div>
+                            <div id="fps-val" class="metric-value text-purple">0.0</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Inference Time</div>
+                            <div id="inf-time-val" class="metric-value text-purple">0 ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Metrics -->
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">Acoustic Analytics</h3>
+                    <div class="metric-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">Sound Intensity</div>
+                            <div id="audio-vol-val" class="metric-value">0%</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Acoustic State</div>
+                            <div id="audio-state-val" class="metric-value text-green">NORMAL</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

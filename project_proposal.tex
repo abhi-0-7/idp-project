@@ -1,0 +1,67 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\title{\textbf{Project Proposal: AI-Based Predictive Crowd Congestion and Panic Alert System Using Multi-Sensor Fusion with FPGA}}
+\author{IDP Project Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The increasing density of urban populations and the frequency of large-scale public gatherings have heightened the risk of crowd-related disasters, such as stampedes and panic-driven accidents. Traditional surveillance systems often rely on manual monitoring, which is prone to human error and latency. This project proposes an \textbf{AI-Based Predictive Crowd Congestion and Panic Alert System} that leverages real-time multi-sensor fusion (Vision and Audio) and high-speed hardware integration (FPGA) to predict and alert authorities before dangerous situations escalate.
+
+\section{Core Objectives}
+The primary goal is to develop a proactive safety system with the following capabilities:
+\begin{itemize}
+    \item \textbf{Real-time Human Detection:} Utilizing state-of-the-art YOLO (You Only Look Once) models (v10 and v11) to monitor crowd density.
+    \item \textbf{Acoustic Panic Detection:} Processing high-frequency audio streams to identify sudden spikes in sound intensity indicative of shouting or distress.
+    \item \textbf{Multi-Sensor Fusion:} Combining visual and acoustic data into a singular Machine Learning (ML) risk model.
+    \item \textbf{Low-Latency Hardware Alerting:} Offloading alert logic to an FPGA via UART for instantaneous visual and auditory signals.
+    \item \textbf{High-Performance Monitoring Dashboard:} A web-based interface for remote monitoring and model selection.
+\end{itemize}
+
+\section{System Architecture}
+The system is divided into four critical layers:
+\subsection{Data Acquisition Layer}
+Utilizes mobile devices running IP Webcam software to stream synchronized high-definition video and 16-bit PCM audio over a local Wi-Fi network.
+
+\subsection{AI Processing Layer (Python/Flask Backend)}
+\begin{itemize}
+    \item \textbf{Vision Module:} Implements an asynchronous multi-threaded pipeline using YOLOv10/v11 (Nano to Extra-Large variants) to ensure 30 FPS video throughput regardless of inference load.
+    \item \textbf{Audio Module:} Processes raw WAV streams using RMS (Root Mean Square) algorithms to detect volume thresholds.
+\end{itemize}
+
+\subsection{Decision Layer (ML Fusion)}
+A classification model (Random Forest or Logistic Regression) that takes input features (Count, Density, Volume) to generate a standardized Risk Score (LOW, MEDIUM, HIGH, CRITICAL).
+
+\subsection{Hardware Layer (FPGA)}
+A Field Programmable Gate Array (FPGA) board receives the Risk Score via UART and controls hardware peripherals:
+\begin{itemize}
+    \item \textbf{Green LED:} Low Risk.
+    \item \textbf{Yellow LED:} Medium Risk.
+    \item \textbf{Red LED + Buzzer:} High/Critical Risk.
+\end{itemize}
+
+\section{Software and Hardware Stack}
+\begin{itemize}
+    \item \textbf{Software:} Python 3.9+, OpenCV, Ultralytics (YOLO), Flask, NumPy, PySerial, Scikit-learn.
+    \item \textbf{Hardware:} Android Smartphone (Camera/Mic Source), PC (Processing Unit), FPGA Board (Basys 3/Equivalent).
+\end{itemize}
+
+\section{Expected Outcomes}
+A fully functional, end-to-end predictive system capable of identifying dangerous crowd density and panic sounds within 1 second of occurrence, providing immediate hardware alerts to save lives in public spaces.
+
+\end{document}

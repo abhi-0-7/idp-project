@@ -1,0 +1,74 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\title{\textbf{Progress Report: AI-Based Predictive Crowd Congestion and Panic Alert System}}
+\author{IDP Project Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Work Completed to Date}
+
+\subsection{Phase 1: Environment and Infrastructure Setup}
+\begin{itemize}
+    \item \textbf{Development Environment:} Established a Python 3.9+ virtual environment with all core dependencies including OpenCV, Torch, and Ultralytics.
+    \item \textbf{Web Architecture:} Developed a Flask-based web server to host the project, enabling a move from CLI scripts to a professional dashboard interface.
+    \item \textbf{Data Pipeline:} Successfully configured mobile IP Webcam integration for high-definition video and raw audio streaming via local network.
+\end{itemize}
+
+\subsection{Phase 2: Vision Module and Model Comparison}
+\begin{itemize}
+    \item \textbf{Asynchronous Architecture:} Implemented a multi-threaded system where video capture, inference, and UI streaming run in parallel. This ensures a consistent \textbf{30 FPS} video feed even when running heavy models.
+    \item \textbf{Model Integration:} Integrated three distinct YOLO versions (YOLOv11 Nano, YOLOv10 Extra Large, and YOLOv11 Extra Large).
+    \item \textbf{Performance Optimization:} Optimized CPU inference using image scaling (imgsz=320) to ensure real-time responsiveness.
+    \item \textbf{Metrics Overlay:} Implemented real-time tracking of FPS, Inference Time (ms), and Person Count displayed directly on the dashboard.
+\end{itemize}
+
+\subsection{Phase 3: Audio Signal Processing}
+\begin{itemize}
+    \item \textbf{Live Stream Decoder:} Built a real-time decoder for the IP Webcam audio stream.
+    \item \textbf{RMS Processing:} Implemented Root Mean Square (RMS) volume calculation to monitor sound intensity.
+    \item \textbf{Sensitivity Tuning:} Applied a 5x gain factor to ensure accurate panic detection based on acoustic environments.
+\end{itemize}
+
+\section{Current Project Status}
+The project has successfully moved from the initialization phase to a functional multi-sensor monitoring system. The core vision and audio engines are stable, and the web-based dashboard is fully operational.
+
+\section{Future Work and Remaining Phases}
+
+\subsection{Phase 4: Machine Learning Risk Classifier}
+\textbf{Goal:} Replace rule-based logic with a trained classifier.
+\begin{itemize}
+    \item \textbf{Task:} Generate a dataset mapping [Count, Density, Volume] to [Low, Medium, High, Critical].
+    \item \textbf{Task:} Train a Random Forest model using Scikit-Learn.
+    \item \textbf{Task:} Deploy the model to the backend for real-time risk assessment.
+\end{itemize}
+
+\subsection{Phase 5: FPGA Integration via UART}
+\textbf{Goal:} Establish physical hardware alerts.
+\begin{itemize}
+    \item \textbf{Task:} Implement Python-to-FPGA serial communication using PySerial.
+    \item \textbf{Task:} Write Verilog/VHDL code for the FPGA to decode UART signals and trigger LEDs/Buzzers.
+\end{itemize}
+
+\subsection{Phase 6: Final Integration and Performance Validation}
+\textbf{Goal:} System stress testing.
+\begin{itemize}
+    \item \textbf{Task:} Measure end-to-end latency from camera capture to hardware alert.
+    \item \textbf{Task:} Perform false-alarm testing under varied environmental conditions.
+\end{itemize}
+
+\end{document}
